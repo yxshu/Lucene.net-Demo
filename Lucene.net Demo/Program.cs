@@ -31,5 +31,4 @@ namespace Lucene.net_Demo
             Console.ReadLine();
         }
     }
-
 }
