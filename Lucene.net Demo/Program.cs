@@ -22,7 +22,6 @@ namespace Lucene.net_Demo
             List<QuestionModel> list = Utility.DataTableToModel<QuestionModel>(dt, typeof(QuestionModel));
 
             ///利用Lucene.NET生成索引文件Index
-            ///
 
 
             ///利用Lucene.NET查询索引文件并高亮显示以及按相关度排序

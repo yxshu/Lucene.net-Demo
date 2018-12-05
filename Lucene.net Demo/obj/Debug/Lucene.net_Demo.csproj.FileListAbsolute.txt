@@ -1,0 +1,21 @@
+D:\GitHub\Lucene.net-Demo\Lucene.net Demo\bin\Debug\Lucene.net Demo.exe.config
+D:\GitHub\Lucene.net-Demo\Lucene.net Demo\bin\Debug\Lucene.net Demo.exe
+D:\GitHub\Lucene.net-Demo\Lucene.net Demo\bin\Debug\Lucene.net Demo.pdb
+D:\GitHub\Lucene.net-Demo\Lucene.net Demo\bin\Debug\ICSharpCode.SharpZipLib.dll
+D:\GitHub\Lucene.net-Demo\Lucene.net Demo\bin\Debug\log4net.dll
+D:\GitHub\Lucene.net-Demo\Lucene.net Demo\bin\Debug\Lucene.Net.dll
+D:\GitHub\Lucene.net-Demo\Lucene.net Demo\bin\Debug\NPOI.dll
+D:\GitHub\Lucene.net-Demo\Lucene.net Demo\bin\Debug\NPOI.OOXML.dll
+D:\GitHub\Lucene.net-Demo\Lucene.net Demo\bin\Debug\NPOI.OpenXml4Net.dll
+D:\GitHub\Lucene.net-Demo\Lucene.net Demo\bin\Debug\NPOI.OpenXmlFormats.dll
+D:\GitHub\Lucene.net-Demo\Lucene.net Demo\bin\Debug\PanGu.dll
+D:\GitHub\Lucene.net-Demo\Lucene.net Demo\bin\Debug\PanGu.HighLight.dll
+D:\GitHub\Lucene.net-Demo\Lucene.net Demo\bin\Debug\PanGu.Lucene.Analyzer.dll
+D:\GitHub\Lucene.net-Demo\Lucene.net Demo\bin\Debug\log4net.xml
+D:\GitHub\Lucene.net-Demo\Lucene.net Demo\bin\Debug\Lucene.Net.pdb
+D:\GitHub\Lucene.net-Demo\Lucene.net Demo\bin\Debug\Lucene.Net.xml
+D:\GitHub\Lucene.net-Demo\Lucene.net Demo\bin\Debug\PanGu.pdb
+D:\GitHub\Lucene.net-Demo\Lucene.net Demo\bin\Debug\PanGu.HighLight.pdb
+D:\GitHub\Lucene.net-Demo\Lucene.net Demo\obj\Debug\Lucene.net_Demo.csprojResolveAssemblyReference.cache
+D:\GitHub\Lucene.net-Demo\Lucene.net Demo\obj\Debug\Lucene.net Demo.exe
+D:\GitHub\Lucene.net-Demo\Lucene.net Demo\obj\Debug\Lucene.net Demo.pdb

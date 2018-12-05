@@ -1,20 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using log4net;
 using System.Threading;
+using DTcms.Common;
 using Lucene.Net.Store;
 using System.IO;
 using Lucene.Net.Index;
+using Lucene.Net.Analysis.PanGu;
 using Lucene.Net.Documents;
 using Lucene.Net.Search;
 using Lucene.Net.QueryParsers;
 using PanGu;
 using PanGu.HighLight;
-using log4net;
-using Lucene.Net.Analysis;
-using PanGu.Lucene.Analyzer;
 
-namespace Lucene.net_Demo
+namespace DTcms.Web.UI
 {
     public class SearchHelper
     {
@@ -53,8 +53,6 @@ namespace Lucene.net_Demo
             return uniqueInstance;
         }
         #endregion
-
-       
 
         private Queue<IndexJob> jobs = new Queue<IndexJob>();       //任务队列,保存生产出来的任务和消费者使用,不使用list避免移除时数据混乱问题
 

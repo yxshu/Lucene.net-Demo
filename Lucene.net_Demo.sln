@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lucene.net Demo", "Lucene.net Demo\Lucene.net Demo.csproj", "{FAA7CC5C-A8E3-4931-B621-E58B372FC4EF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lucene.net Demo", "Lucene.net Demo\Lucene.net_Demo.csproj", "{FAA7CC5C-A8E3-4931-B621-E58B372FC4EF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
