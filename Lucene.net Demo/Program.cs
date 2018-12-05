@@ -20,13 +20,19 @@ namespace Lucene.net_Demo
 
             ///利用反射和泛型将Datatable中的数据转换成对象对放入list中
             List<QuestionModel> list = Utility.DataTableToModel<QuestionModel>(dt, typeof(QuestionModel));
-
+            Console.WriteLine(list.Count);
             ///利用Lucene.NET生成索引文件Index
-
+            Console.WriteLine("开始索引----------------");
+            SearchHelper searchhelper = SearchHelper.GetInstance();
+            searchhelper.CustomerStart();
+            foreach (QuestionModel q in list)
+            {
+                searchhelper.AddArticle(q);
+            }
 
             ///利用Lucene.NET查询索引文件并高亮显示以及按相关度排序
 
-            Console.WriteLine(list.Count);
+
             Console.ReadLine();
         }
     }

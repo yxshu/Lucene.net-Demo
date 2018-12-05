@@ -19,3 +19,24 @@ D:\GitHub\Lucene.net-Demo\Lucene.net Demo\bin\Debug\PanGu.HighLight.pdb
 D:\GitHub\Lucene.net-Demo\Lucene.net Demo\obj\Debug\Lucene.net_Demo.csprojResolveAssemblyReference.cache
 D:\GitHub\Lucene.net-Demo\Lucene.net Demo\obj\Debug\Lucene.net Demo.exe
 D:\GitHub\Lucene.net-Demo\Lucene.net Demo\obj\Debug\Lucene.net Demo.pdb
+C:\Users\yxshu\Documents\Visual Studio 2012\Projects\Lucene.net Demo\Lucene.net Demo\bin\Debug\Lucene.net Demo.exe.config
+C:\Users\yxshu\Documents\Visual Studio 2012\Projects\Lucene.net Demo\Lucene.net Demo\obj\Debug\Lucene.net Demo.exe
+C:\Users\yxshu\Documents\Visual Studio 2012\Projects\Lucene.net Demo\Lucene.net Demo\obj\Debug\Lucene.net Demo.pdb
+C:\Users\yxshu\Documents\Visual Studio 2012\Projects\Lucene.net Demo\Lucene.net Demo\obj\Debug\Lucene.net_Demo.csprojResolveAssemblyReference.cache
+C:\Users\yxshu\Documents\Visual Studio 2012\Projects\Lucene.net Demo\Lucene.net Demo\bin\Debug\Lucene.net Demo.exe
+C:\Users\yxshu\Documents\Visual Studio 2012\Projects\Lucene.net Demo\Lucene.net Demo\bin\Debug\Lucene.net Demo.pdb
+C:\Users\yxshu\Documents\Visual Studio 2012\Projects\Lucene.net Demo\Lucene.net Demo\bin\Debug\ICSharpCode.SharpZipLib.dll
+C:\Users\yxshu\Documents\Visual Studio 2012\Projects\Lucene.net Demo\Lucene.net Demo\bin\Debug\log4net.dll
+C:\Users\yxshu\Documents\Visual Studio 2012\Projects\Lucene.net Demo\Lucene.net Demo\bin\Debug\Lucene.Net.dll
+C:\Users\yxshu\Documents\Visual Studio 2012\Projects\Lucene.net Demo\Lucene.net Demo\bin\Debug\NPOI.dll
+C:\Users\yxshu\Documents\Visual Studio 2012\Projects\Lucene.net Demo\Lucene.net Demo\bin\Debug\NPOI.OOXML.dll
+C:\Users\yxshu\Documents\Visual Studio 2012\Projects\Lucene.net Demo\Lucene.net Demo\bin\Debug\NPOI.OpenXml4Net.dll
+C:\Users\yxshu\Documents\Visual Studio 2012\Projects\Lucene.net Demo\Lucene.net Demo\bin\Debug\NPOI.OpenXmlFormats.dll
+C:\Users\yxshu\Documents\Visual Studio 2012\Projects\Lucene.net Demo\Lucene.net Demo\bin\Debug\PanGu.dll
+C:\Users\yxshu\Documents\Visual Studio 2012\Projects\Lucene.net Demo\Lucene.net Demo\bin\Debug\PanGu.HighLight.dll
+C:\Users\yxshu\Documents\Visual Studio 2012\Projects\Lucene.net Demo\Lucene.net Demo\bin\Debug\PanGu.Lucene.Analyzer.dll
+C:\Users\yxshu\Documents\Visual Studio 2012\Projects\Lucene.net Demo\Lucene.net Demo\bin\Debug\log4net.xml
+C:\Users\yxshu\Documents\Visual Studio 2012\Projects\Lucene.net Demo\Lucene.net Demo\bin\Debug\Lucene.Net.pdb
+C:\Users\yxshu\Documents\Visual Studio 2012\Projects\Lucene.net Demo\Lucene.net Demo\bin\Debug\Lucene.Net.xml
+C:\Users\yxshu\Documents\Visual Studio 2012\Projects\Lucene.net Demo\Lucene.net Demo\bin\Debug\PanGu.pdb
+C:\Users\yxshu\Documents\Visual Studio 2012\Projects\Lucene.net Demo\Lucene.net Demo\bin\Debug\PanGu.HighLight.pdb
