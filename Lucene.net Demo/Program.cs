@@ -14,6 +14,8 @@ namespace Lucene.net_Demo
 
         static void Main(string[] args)
         {
+
+            //https://www.cnblogs.com/beimeng/p/3258967.html
             Console.WriteLine("****************** Lucene.net Demo Start ********************");
 
             ///利用NPOI从EXCEL中读取文件并存入DataTable中
@@ -28,8 +30,13 @@ namespace Lucene.net_Demo
             Console.WriteLine("----------------开始索引----------------");
             ///利用Lucene.NET查询索引文件并高亮显示以及按相关度排序
             SearchHelper searchhelper = SearchHelper.GetInstance();
-            searchhelper.CreatIndexsByDescription(new List<object>(list));
-            Console.ReadLine();
+            searchhelper.CreatIndexs(new List<object>(list));
+            while (true)
+            {
+                Console.WriteLine("请输入要查询的关键词：");
+                string KeyWord = Console.ReadLine();
+                Console.WriteLine("共搜索到:{0}条记录。", searchhelper.SearchIndex(KeyWord));
+            }
         }
     }
 }

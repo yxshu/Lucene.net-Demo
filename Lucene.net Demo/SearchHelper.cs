@@ -1,15 +1,16 @@
-﻿using Lucene.Net.Analysis;
-using Lucene.Net.Index;
+﻿using Lucene.Net.Index;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 using Lucene.Net.Store;
 using Lucene.Net.Documents;
 using System.Reflection;
 using System.ComponentModel;
+
+using PanGu;
+using Lucene.Net.Analysis.PanGu;
+using Lucene.Net.Search;
 
 namespace Lucene.net_Demo
 {
@@ -17,7 +18,7 @@ namespace Lucene.net_Demo
     {
         // 定义一个静态变量来保存类的实例,使用单例模式
         private static SearchHelper uniqueInstance;
-
+        private static string IndexDir = System.Configuration.ConfigurationManager.AppSettings["IndexDir"];
         private SearchHelper() { }// 定义私有构造函数，使外界不能创建该类实例
 
         public static SearchHelper GetInstance()
@@ -35,7 +36,6 @@ namespace Lucene.net_Demo
         /// <returns>返回打开的目录</returns>
         private FSDirectory CreateFSDirectory()
         {
-            string IndexDir = System.Configuration.ConfigurationManager.AppSettings["IndexDir"];
             if (!System.IO.Directory.Exists(IndexDir))
             {
                 System.IO.Directory.CreateDirectory(IndexDir);
@@ -64,14 +64,12 @@ namespace Lucene.net_Demo
         }
 
         /// <summary>
-        ///写入索引 ,主要通过model属性上的Description中标注的store 和index进行识别和索引
-        ///调用完成以后，记得关闭indexwriter
+        /// 根据Model对象生成一条Document记录
         /// </summary>
-        /// <param name="type"></param>
         /// <param name="obj"></param>
-        private Boolean CreatIndexByDescription(IndexWriter indexwriter, object obj)
+        /// <returns></returns>
+        private Document CreateDocumentByDexscription(object obj)
         {
-            bool success = false;
             Document document = new Document();//一条记录
             Type type = obj.GetType();
             PropertyInfo[] propertyinfos = type.GetProperties();
@@ -100,27 +98,39 @@ namespace Lucene.net_Demo
                         document.Add(new Field(propertyinfo.Name, propertyinfo.GetValue(obj).ToString(), store, index));
                     }
                 }
-                if (document.GetFields().Count > 0)
-                {
-                    indexwriter.AddDocument(document);
-                    success = true;
-                    Console.WriteLine("{0}创建索引成功。", obj.ToString());
-                }
-                return success;
+                return document;
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
                 throw e;
             }
         }
+        /// <summary>
+        ///写入索引 ,主要通过model属性上的Description中标注的store 和index进行识别和索引
+        ///调用完成以后，记得关闭indexwriter
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="obj"></param>
+        private Boolean CreatIndex(IndexWriter indexwriter, Document document)
+        {
+            bool success = false;
+
+            if (document.GetFields().Count > 0)
+            {
+                indexwriter.AddDocument(document);
+                success = true;
+                Console.WriteLine("{0}创建索引成功。", document.ToString());
+            }
+            return success;
+        }
+
 
         /// <summary>
         /// 创建索引
         /// </summary>
         /// <param name="list"></param>
         /// <returns></returns>
-        public Boolean CreatIndexsByDescription(List<object> list)
+        public Boolean CreatIndexs(List<object> list)
         {
             bool success = true;
             IndexWriter indexwriter = CreateWriter();
@@ -128,7 +138,7 @@ namespace Lucene.net_Demo
             {
                 foreach (object obj in list)
                 {
-                    if (!CreatIndexByDescription(indexwriter, obj))
+                    if (!CreatIndex(indexwriter, CreateDocumentByDexscription(obj)))
                     {
                         success = false;
                         break;
@@ -144,10 +154,44 @@ namespace Lucene.net_Demo
             finally
             {
                 indexwriter.Optimize();
-                indexwriter.Close();
+                indexwriter.Dispose();
             }
             Console.WriteLine("成功创建索引{0}条。", list.Count);
             return success;
         }
+        /// <summary>
+        /// 搜索索引
+        /// https://www.cnblogs.com/leeSmall/p/9027172.html
+        /// </summary>
+        /// <param name="keyword"></param>
+        public int SearchIndex(string keyword) {
+            Net.Store.FSDirectory directory = Net.Store.FSDirectory.Open(new DirectoryInfo(IndexDir));
+            IndexReader indexreader = IndexReader.Open(directory, true);
+            IndexSearcher indexsearch = new IndexSearcher(indexreader);
+            TopDocs topdocs = indexsearch.Search(new TermQuery(new Term("Title", GetKeyWordsSplitBySpace(keyword))), 10);
+            return topdocs.TotalHits;
+        }
+
+        /// <summary>
+        /// 处理关键字为索引格式
+        /// </summary>
+        /// <param name="keywords"></param>
+        /// <returns></returns>
+        private string GetKeyWordsSplitBySpace(string keywords)
+        {
+            PanGuTokenizer ktTokenizer = new PanGuTokenizer();
+            StringBuilder result = new StringBuilder();
+            ICollection<WordInfo> words = ktTokenizer.SegmentToWordInfos(keywords);
+            foreach (WordInfo word in words)
+            {
+                if (word == null)
+                {
+                    continue;
+                }
+                result.AppendFormat("{0}^{1}.0 ", word.Word, (int)Math.Pow(3, word.Rank));
+            }
+            return result.ToString().Trim();
+        }
+
     }
 }
