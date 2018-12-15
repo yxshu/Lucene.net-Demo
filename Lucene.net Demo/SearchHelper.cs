@@ -187,7 +187,6 @@ namespace Lucene.net_Demo
             }
             finally
             {
-
                 indexsearch.Dispose();
                 directory.Dispose();
             }    
