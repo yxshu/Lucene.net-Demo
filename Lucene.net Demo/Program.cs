@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Lucene.Net.Search;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -35,7 +36,8 @@ namespace Lucene.net_Demo
             {
                 Console.WriteLine("请输入要查询的关键词：");
                 string KeyWord = Console.ReadLine();
-                Console.WriteLine("共搜索到:{0}条记录。", searchhelper.SearchIndex(KeyWord));
+                Lucene.Net.Documents.Document[] topDocs= searchhelper.SearchIndex(KeyWord,10);
+                Console.WriteLine("共搜索到:{0}条记录。", topDocs.Length);
             }
         }
     }

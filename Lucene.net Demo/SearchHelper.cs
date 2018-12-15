@@ -11,6 +11,7 @@ using System.ComponentModel;
 using PanGu;
 using Lucene.Net.Analysis.PanGu;
 using Lucene.Net.Search;
+using Lucene.Net.QueryParsers;
 
 namespace Lucene.net_Demo
 {
@@ -20,6 +21,7 @@ namespace Lucene.net_Demo
         private static SearchHelper uniqueInstance;
         private static string IndexDir = System.Configuration.ConfigurationManager.AppSettings["IndexDir"];
         private SearchHelper() { }// 定义私有构造函数，使外界不能创建该类实例
+        private static readonly PanGuAnalyzer panGuAnalyzer = new PanGuAnalyzer();// 创建索引和查询统一使用这个分词器
 
         public static SearchHelper GetInstance()
         {
@@ -58,7 +60,7 @@ namespace Lucene.net_Demo
             {
                 IndexWriter.Unlock(directory);
             }
-            writer = new IndexWriter(directory, new PanGuAnalyzer(), true, Lucene.Net.Index.IndexWriter.MaxFieldLength.LIMITED);//生成索引写手
+            writer = new IndexWriter(directory, panGuAnalyzer, true, Lucene.Net.Index.IndexWriter.MaxFieldLength.LIMITED);//生成索引写手
             Console.WriteLine(string.Format("生成IndexWriter:{0}成功。", writer.Directory.ToString()));
             return writer;
         }
@@ -164,34 +166,32 @@ namespace Lucene.net_Demo
         /// https://www.cnblogs.com/leeSmall/p/9027172.html
         /// </summary>
         /// <param name="keyword"></param>
-        public int SearchIndex(string keyword) {
-            Net.Store.FSDirectory directory = Net.Store.FSDirectory.Open(new DirectoryInfo(IndexDir));
+        public Document[] SearchIndex(string keyword,int count)
+        {
+            List<Document> results = new List<Document>();
+            PanGuAnalyzer panGuAnalyzer = new PanGuAnalyzer();
+            Net.Store.Directory directory = Net.Store.FSDirectory.Open(new DirectoryInfo(IndexDir));
             IndexReader indexreader = IndexReader.Open(directory, true);
             IndexSearcher indexsearch = new IndexSearcher(indexreader);
-            TopDocs topdocs = indexsearch.Search(new TermQuery(new Term("Title", GetKeyWordsSplitBySpace(keyword))), 10);
-            return topdocs.TotalHits;
+            //Query query = new TermQuery(new Term("Title", keyword));
+            QueryParser queryParser = new QueryParser( Net.Util.Version.LUCENE_30, "Title", panGuAnalyzer);
+            Query query = queryParser.Parse(keyword);
+            
+            try
+            {
+                TopDocs topdocs = indexsearch.Search(query, count);
+                foreach (ScoreDoc scoreDoc in topdocs.ScoreDocs) {
+                    results.Add(indexsearch.Doc(scoreDoc.Doc));
+                }
+                return results.ToArray();
+            }
+            finally
+            {
+                indexsearch.Dispose();
+                directory.Dispose();
+            }    
         }
 
-        /// <summary>
-        /// 处理关键字为索引格式
-        /// </summary>
-        /// <param name="keywords"></param>
-        /// <returns></returns>
-        private string GetKeyWordsSplitBySpace(string keywords)
-        {
-            PanGuTokenizer ktTokenizer = new PanGuTokenizer();
-            StringBuilder result = new StringBuilder();
-            ICollection<WordInfo> words = ktTokenizer.SegmentToWordInfos(keywords);
-            foreach (WordInfo word in words)
-            {
-                if (word == null)
-                {
-                    continue;
-                }
-                result.AppendFormat("{0}^{1}.0 ", word.Word, (int)Math.Pow(3, word.Rank));
-            }
-            return result.ToString().Trim();
-        }
 
     }
 }
