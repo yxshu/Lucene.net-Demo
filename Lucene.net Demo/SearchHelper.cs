@@ -1,17 +1,14 @@
-﻿using Lucene.Net.Index;
+﻿using Lucene.Net.Analysis.PanGu;
+using Lucene.Net.Documents;
+using Lucene.Net.Index;
+using Lucene.Net.QueryParsers;
+using Lucene.Net.Search;
+using Lucene.Net.Store;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.IO;
-using Lucene.Net.Store;
-using Lucene.Net.Documents;
-using System.Reflection;
 using System.ComponentModel;
-
-using PanGu;
-using Lucene.Net.Analysis.PanGu;
-using Lucene.Net.Search;
-using Lucene.Net.QueryParsers;
+using System.IO;
+using System.Reflection;
 
 namespace Lucene.net_Demo
 {
@@ -19,7 +16,7 @@ namespace Lucene.net_Demo
     {
         // 定义一个静态变量来保存类的实例,使用单例模式
         private static SearchHelper uniqueInstance;
-        private static string IndexDir = System.Configuration.ConfigurationManager.AppSettings["IndexDir"];
+        private static readonly string IndexDir = System.Configuration.ConfigurationManager.AppSettings["IndexDir"];
         private SearchHelper() { }// 定义私有构造函数，使外界不能创建该类实例
         private static readonly PanGuAnalyzer panGuAnalyzer = new PanGuAnalyzer();// 创建索引和查询统一使用这个分词器
 
@@ -65,12 +62,27 @@ namespace Lucene.net_Demo
             return writer;
         }
 
+        private string[] GetIndexedPropertyNameByDescription(Type type)
+        {
+            List<string> list = new List<string>();
+            PropertyInfo[] propertyInfos = type.GetProperties();
+            foreach (PropertyInfo propertyInfo in propertyInfos)
+            {
+                DescriptionAttribute descriptionAttribute = (DescriptionAttribute)propertyInfo.GetCustomAttribute(typeof(DescriptionAttribute));
+                if (descriptionAttribute != null &&descriptionAttribute.Description.ToLower().Contains("index"))
+                {
+                    list.Add(propertyInfo.Name);
+                }
+            }
+            return list.ToArray();
+        }
+
         /// <summary>
         /// 根据Model对象生成一条Document记录
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
-        private Document CreateDocumentByDexscription(object obj)
+        private Document CreateDocumentByDescription(object obj)
         {
             Document document = new Document();//一条记录
             Type type = obj.GetType();
@@ -82,7 +94,11 @@ namespace Lucene.net_Demo
                     Field.Store store = Field.Store.NO;
                     Field.Index index = Field.Index.NO;
                     DescriptionAttribute attr = (DescriptionAttribute)propertyinfo.GetCustomAttribute(typeof(DescriptionAttribute));
-                    if (attr == null) continue;
+                    if (attr == null)
+                    {
+                        continue;
+                    }
+
                     string[] str = attr.Description.ToString().Split();
                     foreach (string s in str)
                     {
@@ -113,7 +129,7 @@ namespace Lucene.net_Demo
         /// </summary>
         /// <param name="type"></param>
         /// <param name="obj"></param>
-        private Boolean CreatIndex(IndexWriter indexwriter, Document document)
+        private bool CreatIndex(IndexWriter indexwriter, Document document)
         {
             bool success = false;
 
@@ -132,7 +148,7 @@ namespace Lucene.net_Demo
         /// </summary>
         /// <param name="list"></param>
         /// <returns></returns>
-        public Boolean CreatIndexs(List<object> list)
+        public bool CreatIndexs(List<object> list)
         {
             bool success = true;
             IndexWriter indexwriter = CreateWriter();
@@ -140,7 +156,7 @@ namespace Lucene.net_Demo
             {
                 foreach (object obj in list)
                 {
-                    if (!CreatIndex(indexwriter, CreateDocumentByDexscription(obj)))
+                    if (!CreatIndex(indexwriter, CreateDocumentByDescription(obj)))
                     {
                         success = false;
                         break;
@@ -166,21 +182,33 @@ namespace Lucene.net_Demo
         /// https://www.cnblogs.com/leeSmall/p/9027172.html
         /// </summary>
         /// <param name="keyword"></param>
-        public Document[] SearchIndex(string keyword,int count)
+        public Document[] SearchIndex(string keyword,Type type, int count, out int totalhits)
         {
             List<Document> results = new List<Document>();
             PanGuAnalyzer panGuAnalyzer = new PanGuAnalyzer();
             Net.Store.Directory directory = Net.Store.FSDirectory.Open(new DirectoryInfo(IndexDir));
             IndexReader indexreader = IndexReader.Open(directory, true);
             IndexSearcher indexsearch = new IndexSearcher(indexreader);
+
             //Query query = new TermQuery(new Term("Title", keyword));
-            QueryParser queryParser = new QueryParser( Net.Util.Version.LUCENE_30, "Title", panGuAnalyzer);
-            Query query = queryParser.Parse(keyword);
-            
+
+            //QueryParser queryParser = new QueryParser(Net.Util.Version.LUCENE_30, "Title", panGuAnalyzer);
+            //Query query = queryParser.Parse(keyword);
+
+            //用法2 传统解析器-多默认字段  MultiFieldQueryParser：
+            string[] multiDefaultFields = GetIndexedPropertyNameByDescription(type);
+            MultiFieldQueryParser multiFieldQueryParser = new MultiFieldQueryParser(Net.Util.Version.LUCENE_30, multiDefaultFields, panGuAnalyzer);
+            // 设置默认的操作
+            //multiFieldQueryParser.setDefaultOperator(Operator.OR);
+            Query query = multiFieldQueryParser.Parse(keyword);
+
+
             try
             {
                 TopDocs topdocs = indexsearch.Search(query, count);
-                foreach (ScoreDoc scoreDoc in topdocs.ScoreDocs) {
+                totalhits = topdocs.TotalHits;
+                foreach (ScoreDoc scoreDoc in topdocs.ScoreDocs)
+                {
                     results.Add(indexsearch.Doc(scoreDoc.Doc));
                 }
                 return results.ToArray();
@@ -189,7 +217,7 @@ namespace Lucene.net_Demo
             {
                 indexsearch.Dispose();
                 directory.Dispose();
-            }    
+            }
         }
 
 
