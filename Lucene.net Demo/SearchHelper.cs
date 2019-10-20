@@ -69,7 +69,7 @@ namespace Lucene.net_Demo
             foreach (PropertyInfo propertyInfo in propertyInfos)
             {
                 DescriptionAttribute descriptionAttribute = (DescriptionAttribute)propertyInfo.GetCustomAttribute(typeof(DescriptionAttribute));
-                if (descriptionAttribute != null &&descriptionAttribute.Description.ToLower().Contains("index"))
+                if (descriptionAttribute != null && descriptionAttribute.Description.ToLower().Contains("index"))
                 {
                     list.Add(propertyInfo.Name);
                 }
@@ -137,28 +137,42 @@ namespace Lucene.net_Demo
             {
                 indexwriter.AddDocument(document);
                 success = true;
-                Console.WriteLine("{0}创建索引成功。", document.ToString());
             }
             return success;
         }
 
+        public void UpdateIndex(Term term, IndexWriter indexWriter, Document document)
+        {
+            try
+            {
+                indexWriter.UpdateDocument(term, document);
+            }
+            finally
+            {
+                if (indexWriter != null)
+                {
+                    indexWriter.Dispose();
+                }
+            }
+        }
 
         /// <summary>
         /// 创建索引
         /// </summary>
         /// <param name="list"></param>
         /// <returns></returns>
-        public bool CreatIndexs(List<object> list)
+        public int CreatIndexs(List<object> list)
         {
-            bool success = true;
+
             IndexWriter indexwriter = CreateWriter();
+            IndexReader indexReader = IndexReader.Open(CreateFSDirectory(), true);
             try
             {
                 foreach (object obj in list)
                 {
                     if (!CreatIndex(indexwriter, CreateDocumentByDescription(obj)))
                     {
-                        success = false;
+
                         break;
                     }
                 }
@@ -174,15 +188,14 @@ namespace Lucene.net_Demo
                 indexwriter.Optimize();
                 indexwriter.Dispose();
             }
-            Console.WriteLine("成功创建索引{0}条。", list.Count);
-            return success;
+            return indexReader.MaxDoc;
         }
         /// <summary>
         /// 搜索索引
         /// https://www.cnblogs.com/leeSmall/p/9027172.html
         /// </summary>
         /// <param name="keyword"></param>
-        public Document[] SearchIndex(string keyword,Type type, int count, out int totalhits)
+        public Document[] SearchIndex(string keyword, Type type, int count, out int totalhits)
         {
             List<Document> results = new List<Document>();
             PanGuAnalyzer panGuAnalyzer = new PanGuAnalyzer();
