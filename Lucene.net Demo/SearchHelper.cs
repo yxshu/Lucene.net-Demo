@@ -23,7 +23,7 @@ namespace Lucene.net_Demo
 
         public static SearchHelper GetInstance()
         {
-            indexreader = CreateReader();
+            //indexreader = CreateReader();
             if (uniqueInstance == null)
             {
                 uniqueInstance = new SearchHelper();
@@ -42,7 +42,7 @@ namespace Lucene.net_Demo
             {
                 System.IO.Directory.CreateDirectory(IndexDir);
             }
-            FSDirectory directory = FSDirectory.Open(new DirectoryInfo(IndexDir));
+            Net.Store.FSDirectory directory = FSDirectory.Open(new DirectoryInfo(IndexDir));
             //Console.WriteLine(string.Format("打开索引目录{0}成功。", IndexDir));
             return directory;
         }
@@ -265,6 +265,7 @@ namespace Lucene.net_Demo
         /// <returns></returns>
         public void SearchIndex(string keyword, Type type, int count, out List<object> scoreANDdoc, out int totalhits)
         {
+            indexreader = CreateReader();
             scoreANDdoc = new List<object>();
             List<Document> results = new List<Document>();
             PanGuAnalyzer panGuAnalyzer = new PanGuAnalyzer();
@@ -280,11 +281,11 @@ namespace Lucene.net_Demo
             MultiFieldQueryParser multiFieldQueryParser = new MultiFieldQueryParser(Net.Util.Version.LUCENE_30, multiDefaultFields, panGuAnalyzer);
             // 设置默认的操作
             //multiFieldQueryParser.setDefaultOperator(Operator.OR);
-            
+
             Query query = multiFieldQueryParser.Parse(keyword);
             try
             {
-                TopDocs topdocs = indexsearch.Search(query,count);
+                TopDocs topdocs = indexsearch.Search(query, count);
                 totalhits = topdocs.TotalHits;
                 foreach (ScoreDoc scoreDoc in topdocs.ScoreDocs)
                 {
