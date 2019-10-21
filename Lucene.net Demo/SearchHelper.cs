@@ -16,31 +16,34 @@ namespace Lucene.net_Demo
     {
         // 定义一个静态变量来保存类的实例,使用单例模式
         private static SearchHelper uniqueInstance;
+        private static IndexReader indexreader;
         private static readonly string IndexDir = System.Configuration.ConfigurationManager.AppSettings["IndexDir"];
         private SearchHelper() { }// 定义私有构造函数，使外界不能创建该类实例
         private static readonly PanGuAnalyzer panGuAnalyzer = new PanGuAnalyzer();// 创建索引和查询统一使用这个分词器
 
         public static SearchHelper GetInstance()
         {
+            indexreader = CreateReader();
             if (uniqueInstance == null)
             {
                 uniqueInstance = new SearchHelper();
             }
             return uniqueInstance;
         }
+
         /// <summary>
         /// 打开索引目录
         /// 索引的地址写在配置文件的appsettings中，以“IndexDir”命名
         /// </summary>
         /// <returns>返回打开的目录</returns>
-        private FSDirectory CreateFSDirectory()
+        private static FSDirectory CreateFSDirectory()
         {
             if (!System.IO.Directory.Exists(IndexDir))
             {
                 System.IO.Directory.CreateDirectory(IndexDir);
             }
-            FSDirectory directory = FSDirectory.Open(new DirectoryInfo(IndexDir), new NativeFSLockFactory());
-            Console.WriteLine(string.Format("打开索引目录{0}成功。", IndexDir));
+            FSDirectory directory = FSDirectory.Open(new DirectoryInfo(IndexDir));
+            //Console.WriteLine(string.Format("打开索引目录{0}成功。", IndexDir));
             return directory;
         }
 
@@ -57,11 +60,23 @@ namespace Lucene.net_Demo
             {
                 IndexWriter.Unlock(directory);
             }
-            writer = new IndexWriter(directory, panGuAnalyzer, true, Lucene.Net.Index.IndexWriter.MaxFieldLength.LIMITED);//生成索引写手
-            Console.WriteLine(string.Format("生成IndexWriter:{0}成功。", writer.Directory.ToString()));
+            writer = new IndexWriter(directory, panGuAnalyzer, true, Lucene.Net.Index.IndexWriter.MaxFieldLength.LIMITED);//生成索引写手                                                                                                       
+            //Console.WriteLine(string.Format("生成IndexWriter:{0}成功。", writer.Directory.ToString()));
             return writer;
         }
-
+        private static IndexReader CreateReader()
+        {
+            if (indexreader == null)
+            {
+                indexreader = IndexReader.Open(CreateFSDirectory(), true);
+            }
+            return indexreader;
+        }
+        /// <summary>
+        /// 根据对象的attribute属性，取得索引名
+        /// </summary>
+        /// <param name="type">对象类型</param>
+        /// <returns></returns>
         private string[] GetIndexedPropertyNameByDescription(Type type)
         {
             List<string> list = new List<string>();
@@ -79,6 +94,7 @@ namespace Lucene.net_Demo
 
         /// <summary>
         /// 根据Model对象生成一条Document记录
+        /// 其中是否索引和分词根据对象定义中的DescriptionAttribute,如：[Description("store index")]
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
@@ -123,26 +139,83 @@ namespace Lucene.net_Demo
                 throw e;
             }
         }
+
         /// <summary>
-        ///写入索引 ,主要通过model属性上的Description中标注的store 和index进行识别和索引
+        ///写入索引 ,主要通过model属性上的Description中标注的store 和index进行识别和索引，如：[Description("store index")]
         ///调用完成以后，记得关闭indexwriter
         /// </summary>
         /// <param name="type"></param>
         /// <param name="obj"></param>
-        private bool CreatIndex(IndexWriter indexwriter, Document document)
+        public bool CreatIndex(object obj)
         {
             bool success = false;
-
+            Document document = CreateDocumentByDescription(obj);
+            IndexWriter indexWriter = CreateWriter();
             if (document.GetFields().Count > 0)
             {
-                indexwriter.AddDocument(document);
-                success = true;
+                indexWriter.AddDocument(document);
+                try { indexWriter.Commit(); success = true; } finally { indexWriter.Dispose(); }
             }
             return success;
         }
 
-        public void UpdateIndex(Term term, IndexWriter indexWriter, Document document)
+        /// <summary>
+        /// 根据对象的[Description("store index")] 其中第一个中存储不分词的设置为term
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        private static Term CreateTermByDescription(object obj)
         {
+            Term term = null;
+            Type type = obj.GetType();
+            PropertyInfo[] propertyinfos = type.GetProperties();
+            try
+            {
+                foreach (PropertyInfo propertyinfo in propertyinfos)
+                {
+                    Field.Store store = Field.Store.NO;
+                    Field.Index index = Field.Index.NO;
+                    DescriptionAttribute attr = (DescriptionAttribute)propertyinfo.GetCustomAttribute(typeof(DescriptionAttribute));
+                    if (attr == null)
+                    {
+                        continue;
+                    }
+
+                    string[] str = attr.Description.ToString().Split();
+                    foreach (string s in str)
+                    {
+                        if (string.Equals(s.Trim().ToLower(), "store"))
+                        {
+                            store = Field.Store.YES;
+                        }
+                        else if (string.Equals(s.Trim().ToLower(), "index"))
+                        {
+                            index = Field.Index.ANALYZED;
+                        }
+                    }
+                    if (store == Field.Store.YES && index == Field.Index.NO)
+                    {
+                        term = new Term(propertyinfo.Name, propertyinfo.GetValue(obj).ToString());
+                        break;
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            return term;
+        }
+
+        /// <summary>
+        /// 更新索引 ，其中的term是根据对象模型的[Description("store index")]，其中的第一个中存储不词为标准
+        /// </summary>
+        /// <param name="obj"></param>
+        public void UpdateIndex(object obj)
+        {
+            IndexWriter indexWriter = CreateWriter();
+            Document document = CreateDocumentByDescription(obj);
+            Term term = CreateTermByDescription(obj);
             try
             {
                 indexWriter.UpdateDocument(term, document);
@@ -157,25 +230,21 @@ namespace Lucene.net_Demo
         }
 
         /// <summary>
-        /// 创建索引
+        /// 批量创建索引
         /// </summary>
         /// <param name="list"></param>
         /// <returns></returns>
-        public int CreatIndexs(List<object> list)
+        public bool CreatIndexs(List<object> list)
         {
-
-            IndexWriter indexwriter = CreateWriter();
-            IndexReader indexReader = IndexReader.Open(CreateFSDirectory(), true);
+            bool success = true;
+            IndexWriter indexWriter = CreateWriter();
             try
             {
                 foreach (object obj in list)
                 {
-                    if (!CreatIndex(indexwriter, CreateDocumentByDescription(obj)))
-                    {
-
-                        break;
-                    }
+                    indexWriter.AddDocument(CreateDocumentByDescription(obj));
                 }
+                indexWriter.Commit();
             }
             catch (Exception e)
             {
@@ -183,28 +252,26 @@ namespace Lucene.net_Demo
                 throw e;
 
             }
-            finally
-            {
-                indexwriter.Optimize();
-                indexwriter.Dispose();
-            }
-            return indexReader.MaxDoc;
+            return success;
         }
+
         /// <summary>
-        /// 搜索索引
-        /// https://www.cnblogs.com/leeSmall/p/9027172.html
+        /// 查询索引
         /// </summary>
-        /// <param name="keyword"></param>
-        public Document[] SearchIndex(string keyword, Type type, int count, out int totalhits)
+        /// <param name="keyword">关键字</param>
+        /// <param name="type">类型</param>
+        /// <param name="count">输出条数</param>
+        /// <param name="totalhits">查询到的总数量</param>
+        /// <returns></returns>
+        public void SearchIndex(string keyword, Type type, int count, out List<object> scoreANDdoc, out int totalhits)
         {
+            scoreANDdoc = new List<object>();
             List<Document> results = new List<Document>();
             PanGuAnalyzer panGuAnalyzer = new PanGuAnalyzer();
-            Net.Store.Directory directory = Net.Store.FSDirectory.Open(new DirectoryInfo(IndexDir));
-            IndexReader indexreader = IndexReader.Open(directory, true);
+            FSDirectory directory = FSDirectory.Open(new DirectoryInfo(IndexDir));
             IndexSearcher indexsearch = new IndexSearcher(indexreader);
 
             //Query query = new TermQuery(new Term("Title", keyword));
-
             //QueryParser queryParser = new QueryParser(Net.Util.Version.LUCENE_30, "Title", panGuAnalyzer);
             //Query query = queryParser.Parse(keyword);
 
@@ -214,17 +281,19 @@ namespace Lucene.net_Demo
             // 设置默认的操作
             //multiFieldQueryParser.setDefaultOperator(Operator.OR);
             Query query = multiFieldQueryParser.Parse(keyword);
-
-
             try
             {
                 TopDocs topdocs = indexsearch.Search(query, count);
                 totalhits = topdocs.TotalHits;
                 foreach (ScoreDoc scoreDoc in topdocs.ScoreDocs)
                 {
-                    results.Add(indexsearch.Doc(scoreDoc.Doc));
+                    List<object> list = new List<object>();
+                    double score = scoreDoc.Score;
+                    Document document = indexsearch.Doc(scoreDoc.Doc);
+                    list.Add(score);
+                    list.Add(document);
+                    scoreANDdoc.Add(list);
                 }
-                return results.ToArray();
             }
             finally
             {

@@ -61,3 +61,25 @@ d:\Lucene.net-Demo\Lucene.net Demo\obj\Debug\Lucene.net_Demo.csproj.CopyComplete
 d:\Lucene.net-Demo\Lucene.net Demo\obj\Debug\Lucene.net Demo.exe
 d:\Lucene.net-Demo\Lucene.net Demo\obj\Debug\Lucene.net Demo.pdb
 D:\Lucene.net-Demo\Lucene.net Demo\obj\Debug\Lucene.net_Demo.csprojAssemblyReference.cache
+C:\Users\yxshu\Source\Repos\yxshu\Lucene.net-Demo\Lucene.net Demo\obj\Debug\Lucene.net_Demo.csprojAssemblyReference.cache
+C:\Users\yxshu\Source\Repos\yxshu\Lucene.net-Demo\Lucene.net Demo\obj\Debug\Lucene.net_Demo.csproj.CoreCompileInputs.cache
+C:\Users\yxshu\Source\Repos\yxshu\Lucene.net-Demo\Lucene.net Demo\obj\Debug\Lucene.net Demo.exe
+C:\Users\yxshu\Source\Repos\yxshu\Lucene.net-Demo\Lucene.net Demo\obj\Debug\Lucene.net Demo.pdb
+C:\Users\yxshu\Source\Repos\yxshu\Lucene.net-Demo\Lucene.net Demo\bin\Debug\Lucene.net Demo.exe.config
+C:\Users\yxshu\Source\Repos\yxshu\Lucene.net-Demo\Lucene.net Demo\bin\Debug\Lucene.net Demo.exe
+C:\Users\yxshu\Source\Repos\yxshu\Lucene.net-Demo\Lucene.net Demo\bin\Debug\Lucene.net Demo.pdb
+C:\Users\yxshu\Source\Repos\yxshu\Lucene.net-Demo\Lucene.net Demo\bin\Debug\ICSharpCode.SharpZipLib.dll
+C:\Users\yxshu\Source\Repos\yxshu\Lucene.net-Demo\Lucene.net Demo\bin\Debug\log4net.dll
+C:\Users\yxshu\Source\Repos\yxshu\Lucene.net-Demo\Lucene.net Demo\bin\Debug\NPOI.dll
+C:\Users\yxshu\Source\Repos\yxshu\Lucene.net-Demo\Lucene.net Demo\bin\Debug\NPOI.OOXML.dll
+C:\Users\yxshu\Source\Repos\yxshu\Lucene.net-Demo\Lucene.net Demo\bin\Debug\NPOI.OpenXml4Net.dll
+C:\Users\yxshu\Source\Repos\yxshu\Lucene.net-Demo\Lucene.net Demo\bin\Debug\NPOI.OpenXmlFormats.dll
+C:\Users\yxshu\Source\Repos\yxshu\Lucene.net-Demo\Lucene.net Demo\bin\Debug\PanGu.HighLight.dll
+C:\Users\yxshu\Source\Repos\yxshu\Lucene.net-Demo\Lucene.net Demo\bin\Debug\z.Lucene.Net.dll
+C:\Users\yxshu\Source\Repos\yxshu\Lucene.net-Demo\Lucene.net Demo\bin\Debug\z.PanGu.dll
+C:\Users\yxshu\Source\Repos\yxshu\Lucene.net-Demo\Lucene.net Demo\bin\Debug\z.PanGu.Lucene.Analyzer.dll
+C:\Users\yxshu\Source\Repos\yxshu\Lucene.net-Demo\Lucene.net Demo\bin\Debug\PanGu.dll
+C:\Users\yxshu\Source\Repos\yxshu\Lucene.net-Demo\Lucene.net Demo\bin\Debug\log4net.xml
+C:\Users\yxshu\Source\Repos\yxshu\Lucene.net-Demo\Lucene.net Demo\bin\Debug\PanGu.HighLight.pdb
+C:\Users\yxshu\Source\Repos\yxshu\Lucene.net-Demo\Lucene.net Demo\bin\Debug\PanGu.pdb
+C:\Users\yxshu\Source\Repos\yxshu\Lucene.net-Demo\Lucene.net Demo\obj\Debug\Lucene.net_Demo.csproj.CopyComplete

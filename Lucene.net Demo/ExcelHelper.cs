@@ -36,7 +36,6 @@ namespace Lucene.net_Demo
             int j = 0;
             int count = 0;
             ISheet sheet = null;
-
             fs = new FileStream(fileName, FileMode.OpenOrCreate, FileAccess.ReadWrite);
             if (fileName.IndexOf(".xlsx") > 0) // 2007版本
                 workbook = new XSSFWorkbook();
