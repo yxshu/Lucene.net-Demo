@@ -256,7 +256,7 @@ namespace Lucene.net_Demo
         }
 
         /// <summary>
-        /// 查询索引
+        /// 查询索引  https://blog.csdn.net/weixin_33904756/article/details/92404201
         /// </summary>
         /// <param name="keyword">关键字</param>
         /// <param name="type">类型</param>
@@ -280,10 +280,11 @@ namespace Lucene.net_Demo
             MultiFieldQueryParser multiFieldQueryParser = new MultiFieldQueryParser(Net.Util.Version.LUCENE_30, multiDefaultFields, panGuAnalyzer);
             // 设置默认的操作
             //multiFieldQueryParser.setDefaultOperator(Operator.OR);
+            
             Query query = multiFieldQueryParser.Parse(keyword);
             try
             {
-                TopDocs topdocs = indexsearch.Search(query, count);
+                TopDocs topdocs = indexsearch.Search(query,count);
                 totalhits = topdocs.TotalHits;
                 foreach (ScoreDoc scoreDoc in topdocs.ScoreDocs)
                 {
