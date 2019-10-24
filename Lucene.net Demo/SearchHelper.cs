@@ -4,11 +4,13 @@ using Lucene.Net.Index;
 using Lucene.Net.QueryParsers;
 using Lucene.Net.Search;
 using Lucene.Net.Store;
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Reflection;
+using static Lucene.Net.QueryParsers.QueryParser;
 
 namespace Lucene.net_Demo
 {
@@ -23,7 +25,7 @@ namespace Lucene.net_Demo
 
         public static SearchHelper GetInstance()
         {
-            indexreader = CreateReader();
+            //indexreader = CreateReader();
             if (uniqueInstance == null)
             {
                 uniqueInstance = new SearchHelper();
@@ -42,7 +44,7 @@ namespace Lucene.net_Demo
             {
                 System.IO.Directory.CreateDirectory(IndexDir);
             }
-            FSDirectory directory = FSDirectory.Open(new DirectoryInfo(IndexDir));
+            Net.Store.FSDirectory directory = FSDirectory.Open(new DirectoryInfo(IndexDir));
             //Console.WriteLine(string.Format("打开索引目录{0}成功。", IndexDir));
             return directory;
         }
@@ -256,7 +258,7 @@ namespace Lucene.net_Demo
         }
 
         /// <summary>
-        /// 查询索引  https://blog.csdn.net/weixin_33904756/article/details/92404201
+        /// 查询索引  https://my.oschina.net/u/3728166?tab=newest&catalogId=5747400
         /// </summary>
         /// <param name="keyword">关键字</param>
         /// <param name="type">类型</param>
@@ -265,26 +267,31 @@ namespace Lucene.net_Demo
         /// <returns></returns>
         public void SearchIndex(string keyword, Type type, int count, out List<object> scoreANDdoc, out int totalhits)
         {
+            indexreader = CreateReader();
             scoreANDdoc = new List<object>();
             List<Document> results = new List<Document>();
             PanGuAnalyzer panGuAnalyzer = new PanGuAnalyzer();
             FSDirectory directory = FSDirectory.Open(new DirectoryInfo(IndexDir));
             IndexSearcher indexsearch = new IndexSearcher(indexreader);
 
-            //Query query = new TermQuery(new Term("Title", keyword));
-            //QueryParser queryParser = new QueryParser(Net.Util.Version.LUCENE_30, "Title", panGuAnalyzer);
-            //Query query = queryParser.Parse(keyword);
+            // 用法1 传统解析器-单默认字段   QueryParser
+            QueryParser parser = new QueryParser(Net.Util.Version.LUCENE_30, "Title", panGuAnalyzer);
+            parser.PhraseSlop = 2;
+            Query query = parser.Parse(keyword);
+
 
             //用法2 传统解析器-多默认字段  MultiFieldQueryParser：
-            string[] multiDefaultFields = GetIndexedPropertyNameByDescription(type);
-            MultiFieldQueryParser multiFieldQueryParser = new MultiFieldQueryParser(Net.Util.Version.LUCENE_30, multiDefaultFields, panGuAnalyzer);
-            // 设置默认的操作
-            //multiFieldQueryParser.setDefaultOperator(Operator.OR);
-            
-            Query query = multiFieldQueryParser.Parse(keyword);
+            //string[] multiDefaultFields = GetIndexedPropertyNameByDescription(type);
+            //MultiFieldQueryParser multiFieldQueryParser = new MultiFieldQueryParser(Net.Util.Version.LUCENE_30, multiDefaultFields, panGuAnalyzer)
+            //{
+            //    // 设置默认的操作
+            //    DefaultOperator = Operator.OR
+            //};
+            //Query query = multiFieldQueryParser.Parse(keyword);
+
             try
             {
-                TopDocs topdocs = indexsearch.Search(query,count);
+                TopDocs topdocs = indexsearch.Search(query, count);
                 totalhits = topdocs.TotalHits;
                 foreach (ScoreDoc scoreDoc in topdocs.ScoreDocs)
                 {
