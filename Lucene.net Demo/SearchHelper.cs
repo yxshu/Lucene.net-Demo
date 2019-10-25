@@ -1,4 +1,5 @@
 ﻿using Lucene.Net.Analysis.PanGu;
+using Lucene.Net.Analysis.Standard;
 using Lucene.Net.Documents;
 using Lucene.Net.Index;
 using Lucene.Net.QueryParsers;
@@ -274,13 +275,12 @@ namespace Lucene.net_Demo
             FSDirectory directory = FSDirectory.Open(new DirectoryInfo(IndexDir));
             IndexSearcher indexsearch = new IndexSearcher(indexreader);
 
-            // 用法1 传统解析器-单默认字段   QueryParser
+            //用法1 传统解析器-单默认字段   QueryParser
             QueryParser parser = new QueryParser(Net.Util.Version.LUCENE_30, "Title", panGuAnalyzer);
-            parser.PhraseSlop = 2;
+            //parser.PhraseSlop = 2;
             Query query = parser.Parse(keyword);
 
-
-            //用法2 传统解析器-多默认字段  MultiFieldQueryParser：
+            ////用法2 传统解析器-多默认字段  MultiFieldQueryParser：
             //string[] multiDefaultFields = GetIndexedPropertyNameByDescription(type);
             //MultiFieldQueryParser multiFieldQueryParser = new MultiFieldQueryParser(Net.Util.Version.LUCENE_30, multiDefaultFields, panGuAnalyzer)
             //{
@@ -288,6 +288,39 @@ namespace Lucene.net_Demo
             //    DefaultOperator = Operator.OR
             //};
             //Query query = multiFieldQueryParser.Parse(keyword);
+
+
+            ////方法3 复杂的搜索
+            //// 要搜索的字段，一般搜索时都不会只搜索一个字段
+            //string[] multiDefaultFields = GetIndexedPropertyNameByDescription(type);
+            //// 字段之间的与或非关系，MUST表示and，MUST_NOT表示not，SHOULD表示or，有几个fields就必须有几个clauses                                             
+            ////BooleanClause.Occur[] clauses = { BooleanClause.Occur.SHOULD, BooleanClause.Occur.SHOULD };
+            //// MultiFieldQueryParser表示多个域解析， 同时可以解析含空格的字符串，如果我们搜索"上海 中国"
+            //MultiFieldQueryParser multiFieldQueryParser = new MultiFieldQueryParser(Net.Util.Version.LUCENE_30, multiDefaultFields, panGuAnalyzer)
+            //{
+            //    DefaultOperator = QueryParser.Operator.OR
+            //};
+            //Query multiFieldQuery = multiFieldQueryParser.Parse(keyword);
+            //Query termQuery = new TermQuery(new Term("Title", keyword));// 词语搜索,完全匹配,搜索具体的域
+            //Query wildqQuery = new WildcardQuery(new Term("Title", keyword));// 通配符查询
+            //Query prefixQuery = new PrefixQuery(new Term("Title", keyword));// 字段前缀搜索
+            //Query fuzzyQuery = new FuzzyQuery(new Term("Title", keyword));// 相似度查询,模糊查询比如OpenOffica，OpenOffice
+            //BooleanQuery query = new BooleanQuery
+            //{
+            //    { multiFieldQuery, Occur.SHOULD },
+            //    { termQuery, Occur.SHOULD },
+            //    { wildqQuery, Occur.SHOULD },
+            //    { prefixQuery, Occur.SHOULD },
+            //    { fuzzyQuery, Occur.SHOULD }
+            //};// 这才是最终的query
+
+            ////方法4
+            //PerFieldAnalyzerWrapper wrapper = new PerFieldAnalyzerWrapper(panGuAnalyzer);
+            //wrapper.AddAnalyzer("Title", panGuAnalyzer);
+            //string[] fields = GetIndexedPropertyNameByDescription(type);
+            //QueryParser parser = new MultiFieldQueryParser(Lucene.Net.Util.Version.LUCENE_30, fields, wrapper);
+            //Query query = parser.Parse(keyword);
+
 
             try
             {

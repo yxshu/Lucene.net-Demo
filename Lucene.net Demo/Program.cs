@@ -33,7 +33,7 @@ namespace Lucene.net_Demo
             {
                 Console.WriteLine("开始查询，请输入查询关键词:");
                 string keyword = Console.ReadLine();
-                searchHelper.SearchIndex(keyword, typeof(QuestionModel), 10, out List<object> scoreANDdoc, out int totalhits);
+                searchHelper.SearchIndex(keyword, typeof(QuestionModel), 3, out List<object> scoreANDdoc, out int totalhits);
                 Console.WriteLine("查询到{0}个结果。", totalhits);
                 foreach (List<object> d in scoreANDdoc)
                 {
