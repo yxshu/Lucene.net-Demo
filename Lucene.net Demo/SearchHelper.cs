@@ -1,17 +1,14 @@
 ﻿using Lucene.Net.Analysis.PanGu;
-using Lucene.Net.Analysis.Standard;
 using Lucene.Net.Documents;
 using Lucene.Net.Index;
 using Lucene.Net.QueryParsers;
 using Lucene.Net.Search;
 using Lucene.Net.Store;
-
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Reflection;
-using static Lucene.Net.QueryParsers.QueryParser;
 
 namespace Lucene.net_Demo
 {

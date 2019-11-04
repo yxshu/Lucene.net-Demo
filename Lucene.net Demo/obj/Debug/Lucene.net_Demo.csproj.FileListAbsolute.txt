@@ -39,7 +39,6 @@ C:\Users\yxshu\Documents\Visual Studio 2012\Projects\Lucene.net Demo\Lucene.net 
 C:\Users\yxshu\Documents\Visual Studio 2012\Projects\Lucene.net Demo\Lucene.net Demo\bin\Debug\z.PanGu.dll
 C:\Users\yxshu\Documents\Visual Studio 2012\Projects\Lucene.net Demo\Lucene.net Demo\bin\Debug\z.PanGu.Lucene.Analyzer.dll
 C:\Users\yxshu\Documents\Visual Studio 2012\Projects\Lucene.net Demo\Lucene.net Demo\obj\Debug\Lucene.net_Demo.csprojResolveAssemblyReference.cache
-d:\Lucene.net-Demo\Lucene.net Demo\obj\Debug\Lucene.net_Demo.csproj.CoreCompileInputs.cache
 d:\Lucene.net-Demo\Lucene.net Demo\bin\Debug\Lucene.net Demo.exe.config
 d:\Lucene.net-Demo\Lucene.net Demo\bin\Debug\Lucene.net Demo.exe
 d:\Lucene.net-Demo\Lucene.net Demo\bin\Debug\Lucene.net Demo.pdb
