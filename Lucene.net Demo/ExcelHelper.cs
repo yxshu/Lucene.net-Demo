@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
-using NPOI.HSSF.UserModel;
-using System.IO;
+using System;
 using System.Data;
+using System.IO;
 
 namespace Lucene.net_Demo
 {
