@@ -273,19 +273,19 @@ namespace Lucene.net_Demo
             IndexSearcher indexsearch = new IndexSearcher(indexreader);
 
             //用法1 传统解析器-单默认字段   QueryParser
-            //QueryParser parser = new QueryParser(Net.Util.Version.LUCENE_30, "Title", panGuAnalyzer);
-            ////parser.PhraseSlop = 2;
-            ////parser.DefaultOperator = Operator.OR;
-            //Query query = parser.Parse(keyword);
+            QueryParser parser = new QueryParser(Net.Util.Version.LUCENE_30, "Title", panGuAnalyzer);
+            //parser.PhraseSlop = 2;
+            //parser.DefaultOperator = Operator.OR;
+            Query query = parser.Parse(keyword);
 
             ////用法2 传统解析器-多默认字段  MultiFieldQueryParser：
-            string[] multiDefaultFields = GetIndexedPropertyNameByDescription(type);
-            MultiFieldQueryParser multiFieldQueryParser = new MultiFieldQueryParser(Net.Util.Version.LUCENE_30, multiDefaultFields, panGuAnalyzer)
-            {
-                // 设置默认的操作
-                DefaultOperator = Operator.OR
-            };
-            Query query = multiFieldQueryParser.Parse(keyword);
+            //string[] multiDefaultFields = GetIndexedPropertyNameByDescription(type);
+            //MultiFieldQueryParser multiFieldQueryParser = new MultiFieldQueryParser(Net.Util.Version.LUCENE_30, multiDefaultFields, panGuAnalyzer)
+            //{
+            //    // 设置默认的操作
+            //    DefaultOperator = Operator.OR
+            //};
+            //Query query = multiFieldQueryParser.Parse(keyword);
 
 
             ////方法3 复杂的搜索
