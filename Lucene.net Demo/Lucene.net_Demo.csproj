@@ -37,10 +37,6 @@
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
-    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
-      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="NPOI, Version=2.4.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <HintPath>..\packages\NPOI.2.4.0\lib\net40\NPOI.dll</HintPath>
       <Private>True</Private>
@@ -56,9 +52,6 @@
     <Reference Include="NPOI.OpenXmlFormats, Version=2.4.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <HintPath>..\packages\NPOI.2.4.0\lib\net40\NPOI.OpenXmlFormats.dll</HintPath>
       <Private>True</Private>
-    </Reference>
-    <Reference Include="PanGu.HighLight">
-      <HintPath>..\packages\PanGu.Segment.0.0.3\lib\PanGu.HighLight.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -89,26 +82,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Dict\Dict.dct" />
     <None Include="packages.config" />
-    <None Include="Scripts\jquery-3.3.1.min.map" />
-    <None Include="Scripts\jquery-3.3.1.slim.min.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Dict\ChsDoubleName1.txt" />
-    <Content Include="Dict\ChsDoubleName2.txt" />
-    <Content Include="Dict\ChsSingleName.txt" />
-    <Content Include="Dict\Stopword.txt" />
-    <Content Include="Dict\Synonym.txt" />
-    <Content Include="Dict\Wildcard.txt" />
-    <Content Include="Scripts\jquery-3.3.1.intellisense.js" />
-    <Content Include="Scripts\jquery-3.3.1.js" />
-    <Content Include="Scripts\jquery-3.3.1.min.js" />
-    <Content Include="Scripts\jquery-3.3.1.slim.js" />
-    <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="IndexDir\" />
+    <Folder Include="Scripts\" />
     <Folder Include="SourceDir\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
