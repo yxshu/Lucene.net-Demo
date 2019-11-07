@@ -275,6 +275,7 @@ namespace Lucene.net_Demo
             //用法1 传统解析器-单默认字段   QueryParser
             QueryParser parser = new QueryParser(Net.Util.Version.LUCENE_30, "Title", panGuAnalyzer);
             //parser.PhraseSlop = 2;
+            //parser.DefaultOperator = Operator.OR;
             Query query = parser.Parse(keyword);
 
             ////用法2 传统解析器-多默认字段  MultiFieldQueryParser：
