@@ -1,4 +1,6 @@
-﻿using Lucene.Net.Analysis.PanGu;
+﻿using Lucene.Net.Analysis;
+using Lucene.Net.Analysis.PanGu;
+using Lucene.Net.Analysis.Tokenattributes;
 using Lucene.Net.Documents;
 using Lucene.Net.Index;
 using Lucene.Net.QueryParsers;
@@ -9,6 +11,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Reflection;
+using System.Text;
 
 namespace Lucene.net_Demo
 {
@@ -19,7 +22,7 @@ namespace Lucene.net_Demo
         private static IndexReader indexreader;
         private static readonly string IndexDir = System.Configuration.ConfigurationManager.AppSettings["IndexDir"];
         private SearchHelper() { }// 定义私有构造函数，使外界不能创建该类实例
-        private static readonly PanGuAnalyzer panGuAnalyzer = new PanGuAnalyzer();// 创建索引和查询统一使用这个分词器
+        private static readonly Analyzer panGuAnalyzer = new PanGuAnalyzer();// 创建索引和查询统一使用这个分词器
 
         public static SearchHelper GetInstance()
         {
@@ -42,7 +45,7 @@ namespace Lucene.net_Demo
             {
                 System.IO.Directory.CreateDirectory(IndexDir);
             }
-            Net.Store.FSDirectory directory = FSDirectory.Open(new DirectoryInfo(IndexDir));
+            FSDirectory directory = FSDirectory.Open(new DirectoryInfo(IndexDir));
             //Console.WriteLine(string.Format("打开索引目录{0}成功。", IndexDir));
             return directory;
         }
@@ -60,7 +63,7 @@ namespace Lucene.net_Demo
             {
                 IndexWriter.Unlock(directory);
             }
-            writer = new IndexWriter(directory, panGuAnalyzer, true, Lucene.Net.Index.IndexWriter.MaxFieldLength.LIMITED);//生成索引写手                                                                                                       
+            writer = new IndexWriter(directory, panGuAnalyzer, true, IndexWriter.MaxFieldLength.LIMITED);//生成索引写手                                                                                                       
             //Console.WriteLine(string.Format("生成IndexWriter:{0}成功。", writer.Directory.ToString()));
             return writer;
         }
@@ -254,7 +257,25 @@ namespace Lucene.net_Demo
             }
             return success;
         }
-
+        /// <summary>
+        /// 对搜索的关键词进行分词
+        /// </summary>
+        /// <param name="keyword"></param>
+        /// <returns></returns>
+        private static string GetKeyWordSplit(string keyword)
+        {
+            StringBuilder sb = new StringBuilder();
+            TokenStream stream = panGuAnalyzer.TokenStream(keyword, new StringReader(keyword));
+            ITermAttribute ita = null;
+            bool hasnext = stream.IncrementToken();
+            while (hasnext)
+            {
+                ita = stream.GetAttribute<ITermAttribute>();
+                sb.Append(ita.Term + " ");
+                hasnext = stream.IncrementToken();
+            }
+            return sb.ToString();
+        }
         /// <summary>
         /// 查询索引  https://my.oschina.net/u/3728166?tab=newest&catalogId=5747400
         /// </summary>
@@ -276,7 +297,7 @@ namespace Lucene.net_Demo
             QueryParser parser = new QueryParser(Net.Util.Version.LUCENE_30, "Title", panGuAnalyzer);
             //parser.PhraseSlop = 2;
             //parser.DefaultOperator = Operator.OR;
-            Query query = parser.Parse(keyword);
+            Query query = parser.Parse(GetKeyWordSplit(keyword));
 
             ////用法2 传统解析器-多默认字段  MultiFieldQueryParser：
             //string[] multiDefaultFields = GetIndexedPropertyNameByDescription(type);

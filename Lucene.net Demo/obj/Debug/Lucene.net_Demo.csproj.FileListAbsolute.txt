@@ -43,19 +43,13 @@ d:\Lucene.net-Demo\Lucene.net Demo\bin\Debug\Lucene.net Demo.exe.config
 d:\Lucene.net-Demo\Lucene.net Demo\bin\Debug\Lucene.net Demo.exe
 d:\Lucene.net-Demo\Lucene.net Demo\bin\Debug\Lucene.net Demo.pdb
 d:\Lucene.net-Demo\Lucene.net Demo\bin\Debug\ICSharpCode.SharpZipLib.dll
-d:\Lucene.net-Demo\Lucene.net Demo\bin\Debug\log4net.dll
 d:\Lucene.net-Demo\Lucene.net Demo\bin\Debug\NPOI.dll
 d:\Lucene.net-Demo\Lucene.net Demo\bin\Debug\NPOI.OOXML.dll
 d:\Lucene.net-Demo\Lucene.net Demo\bin\Debug\NPOI.OpenXml4Net.dll
 d:\Lucene.net-Demo\Lucene.net Demo\bin\Debug\NPOI.OpenXmlFormats.dll
-d:\Lucene.net-Demo\Lucene.net Demo\bin\Debug\PanGu.HighLight.dll
 d:\Lucene.net-Demo\Lucene.net Demo\bin\Debug\z.Lucene.Net.dll
 d:\Lucene.net-Demo\Lucene.net Demo\bin\Debug\z.PanGu.dll
 d:\Lucene.net-Demo\Lucene.net Demo\bin\Debug\z.PanGu.Lucene.Analyzer.dll
-d:\Lucene.net-Demo\Lucene.net Demo\bin\Debug\PanGu.dll
-d:\Lucene.net-Demo\Lucene.net Demo\bin\Debug\log4net.xml
-d:\Lucene.net-Demo\Lucene.net Demo\bin\Debug\PanGu.HighLight.pdb
-d:\Lucene.net-Demo\Lucene.net Demo\bin\Debug\PanGu.pdb
 d:\Lucene.net-Demo\Lucene.net Demo\obj\Debug\Lucene.net_Demo.csproj.CopyComplete
 d:\Lucene.net-Demo\Lucene.net Demo\obj\Debug\Lucene.net Demo.exe
 d:\Lucene.net-Demo\Lucene.net Demo\obj\Debug\Lucene.net Demo.pdb
