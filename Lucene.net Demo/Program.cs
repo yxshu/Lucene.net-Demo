@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Text;
 
 namespace Lucene.net_Demo
@@ -13,7 +14,8 @@ namespace Lucene.net_Demo
 
             //https://www.cnblogs.com/beimeng/p/3258967.html
             Console.WriteLine("****************** Lucene.net Demo Start ********************");
-
+            
+            String[] files  = Directory.GetFiles("./SourceDir");
             /// 利用NPOI从EXCEL中读取文件并存入DataTable中
             ExcelHelper excelhelp = new ExcelHelper("./SourceDir/equipment-hedetao.xlsx");
             DataTable dt = excelhelp.ExcelToDataTable("Sheet1", true);
