@@ -39,21 +39,6 @@ C:\Users\yxshu\Documents\Visual Studio 2012\Projects\Lucene.net Demo\Lucene.net 
 C:\Users\yxshu\Documents\Visual Studio 2012\Projects\Lucene.net Demo\Lucene.net Demo\bin\Debug\z.PanGu.dll
 C:\Users\yxshu\Documents\Visual Studio 2012\Projects\Lucene.net Demo\Lucene.net Demo\bin\Debug\z.PanGu.Lucene.Analyzer.dll
 C:\Users\yxshu\Documents\Visual Studio 2012\Projects\Lucene.net Demo\Lucene.net Demo\obj\Debug\Lucene.net_Demo.csprojResolveAssemblyReference.cache
-d:\Lucene.net-Demo\Lucene.net Demo\bin\Debug\Lucene.net Demo.exe.config
-d:\Lucene.net-Demo\Lucene.net Demo\bin\Debug\Lucene.net Demo.exe
-d:\Lucene.net-Demo\Lucene.net Demo\bin\Debug\Lucene.net Demo.pdb
-d:\Lucene.net-Demo\Lucene.net Demo\bin\Debug\ICSharpCode.SharpZipLib.dll
-d:\Lucene.net-Demo\Lucene.net Demo\bin\Debug\NPOI.dll
-d:\Lucene.net-Demo\Lucene.net Demo\bin\Debug\NPOI.OOXML.dll
-d:\Lucene.net-Demo\Lucene.net Demo\bin\Debug\NPOI.OpenXml4Net.dll
-d:\Lucene.net-Demo\Lucene.net Demo\bin\Debug\NPOI.OpenXmlFormats.dll
-d:\Lucene.net-Demo\Lucene.net Demo\bin\Debug\z.Lucene.Net.dll
-d:\Lucene.net-Demo\Lucene.net Demo\bin\Debug\z.PanGu.dll
-d:\Lucene.net-Demo\Lucene.net Demo\bin\Debug\z.PanGu.Lucene.Analyzer.dll
-d:\Lucene.net-Demo\Lucene.net Demo\obj\Debug\Lucene.net_Demo.csproj.CopyComplete
-d:\Lucene.net-Demo\Lucene.net Demo\obj\Debug\Lucene.net Demo.exe
-d:\Lucene.net-Demo\Lucene.net Demo\obj\Debug\Lucene.net Demo.pdb
-D:\Lucene.net-Demo\Lucene.net Demo\obj\Debug\Lucene.net_Demo.csprojAssemblyReference.cache
 C:\Users\yxshu\Source\Repos\yxshu\Lucene.net-Demo\Lucene.net Demo\obj\Debug\Lucene.net_Demo.csprojAssemblyReference.cache
 C:\Users\yxshu\Source\Repos\yxshu\Lucene.net-Demo\Lucene.net Demo\obj\Debug\Lucene.net_Demo.csproj.CoreCompileInputs.cache
 C:\Users\yxshu\Source\Repos\yxshu\Lucene.net-Demo\Lucene.net Demo\obj\Debug\Lucene.net Demo.exe
@@ -98,3 +83,18 @@ C:\Users\yxshu\Source\Repos\Lucene.net-Demo\Lucene.net Demo\obj\Debug\Lucene.net
 C:\Users\yxshu\Source\Repos\Lucene.net-Demo\Lucene.net Demo\obj\Debug\Lucene.net_Demo.csproj.CopyComplete
 C:\Users\yxshu\Source\Repos\Lucene.net-Demo\Lucene.net Demo\obj\Debug\Lucene.net Demo.exe
 C:\Users\yxshu\Source\Repos\Lucene.net-Demo\Lucene.net Demo\obj\Debug\Lucene.net Demo.pdb
+D:\Lucene.net-Demo\Lucene.net Demo\bin\Debug\Lucene.net Demo.exe.config
+D:\Lucene.net-Demo\Lucene.net Demo\bin\Debug\Lucene.net Demo.exe
+D:\Lucene.net-Demo\Lucene.net Demo\bin\Debug\Lucene.net Demo.pdb
+D:\Lucene.net-Demo\Lucene.net Demo\bin\Debug\ICSharpCode.SharpZipLib.dll
+D:\Lucene.net-Demo\Lucene.net Demo\bin\Debug\NPOI.dll
+D:\Lucene.net-Demo\Lucene.net Demo\bin\Debug\NPOI.OOXML.dll
+D:\Lucene.net-Demo\Lucene.net Demo\bin\Debug\NPOI.OpenXml4Net.dll
+D:\Lucene.net-Demo\Lucene.net Demo\bin\Debug\NPOI.OpenXmlFormats.dll
+D:\Lucene.net-Demo\Lucene.net Demo\bin\Debug\z.Lucene.Net.dll
+D:\Lucene.net-Demo\Lucene.net Demo\bin\Debug\z.PanGu.dll
+D:\Lucene.net-Demo\Lucene.net Demo\bin\Debug\z.PanGu.Lucene.Analyzer.dll
+D:\Lucene.net-Demo\Lucene.net Demo\obj\Debug\Lucene.net_Demo.csproj.CopyComplete
+D:\Lucene.net-Demo\Lucene.net Demo\obj\Debug\Lucene.net Demo.exe
+D:\Lucene.net-Demo\Lucene.net Demo\obj\Debug\Lucene.net Demo.pdb
+D:\Lucene.net-Demo\Lucene.net Demo\obj\Debug\Lucene.net_Demo.csprojAssemblyReference.cache

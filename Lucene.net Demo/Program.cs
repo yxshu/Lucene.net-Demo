@@ -14,12 +14,22 @@ namespace Lucene.net_Demo
 
             //https://www.cnblogs.com/beimeng/p/3258967.html
             Console.WriteLine("****************** Lucene.net Demo Start ********************");
-            
-            String[] files  = Directory.GetFiles("./SourceDir");
-            /// 利用NPOI从EXCEL中读取文件并存入DataTable中
-            ExcelHelper excelhelp = new ExcelHelper("./SourceDir/equipment-hedetao.xlsx");
-            DataTable dt = excelhelp.ExcelToDataTable("Sheet1", true);
 
+            string[] files = Directory.GetFiles("./SourceDir");
+            DataTable dt = new DataTable();
+            //下面是后来增加的，为了解决多个文件的问题
+            foreach (string file in files)
+            {
+                /// 利用NPOI从EXCEL中读取文件并存入DataTable中
+                ExcelHelper excelhelp = new ExcelHelper(file);
+                DataTable dt0 = excelhelp.ExcelToDataTable("Sheet1", true);
+                if (dt.Rows.Count == 0) { dt = dt0; continue; }
+                for (int i = 1; i < dt0.Rows.Count; i++)
+                {
+
+                    dt.Rows.Add(dt0.Rows[i].ItemArray);
+                }
+            }
             /// 利用反射和泛型将Datatable中的数据转换成对象对放入list中
             List<QuestionModel> list = Utility.DataTableToModel<QuestionModel>(dt, typeof(QuestionModel));
             Console.WriteLine("共获取内容{0}条。", list.Count);
