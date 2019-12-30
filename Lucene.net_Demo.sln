@@ -1,7 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lucene.net Demo", "Lucene.net Demo\Lucene.net_Demo.csproj", "{FAA7CC5C-A8E3-4931-B621-E58B372FC4EF}"
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lucene.net_Demo", "Lucene.net Demo\Lucene.net_Demo.csproj", "{FAA7CC5C-A8E3-4931-B621-E58B372FC4EF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuestionQuery", "QuestionQuery\QuestionQuery.csproj", "{897888B2-D9DA-495C-B13D-169BDFF2EF18}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,8 +17,15 @@ Global
 		{FAA7CC5C-A8E3-4931-B621-E58B372FC4EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FAA7CC5C-A8E3-4931-B621-E58B372FC4EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FAA7CC5C-A8E3-4931-B621-E58B372FC4EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{897888B2-D9DA-495C-B13D-169BDFF2EF18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{897888B2-D9DA-495C-B13D-169BDFF2EF18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{897888B2-D9DA-495C-B13D-169BDFF2EF18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{897888B2-D9DA-495C-B13D-169BDFF2EF18}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5F160403-28E0-4CBD-8B0F-AE5C58F16B48}
 	EndGlobalSection
 EndGlobal
